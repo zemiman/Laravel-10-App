@@ -15,6 +15,9 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
+    public function __construct(){
+        $this->authorizeResource(Project::class, 'project');
+    }
     public function store(StoreProjectRequest $request){
         $validated=$request->validated();
         $project=Auth::user()->projects()->create($validated);

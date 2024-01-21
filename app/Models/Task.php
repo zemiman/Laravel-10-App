@@ -35,8 +35,9 @@ class Task extends Model
     }
     //Filters Tasks only created by the logged in 
     protected static function booted():void{
-        static::addGlobalScope('creator', function(Builder $builder){
-            $builder->where('creator_id', Auth::id());
+        static::addGlobalScope('member', function(Builder $builder){
+            $builder->where('creator_id', Auth::id())
+            ->orWhereIn('project_id', Auth::user()->memberships->pluck('id'));
         });
     }
 }

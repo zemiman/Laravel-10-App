@@ -33,8 +33,10 @@ class Project extends Model
 
     //Filters Projects only created by the logged in 
     protected static function booted():void{
-        static::addGlobalScope('creator', function(Builder $builder){
-            $builder->where('creator_id', Auth::id());
+        // static::addGlobalScope('creator', function(Builder $builder){
+        //     $builder->where('creator_id', Auth::id());
+        static::addGlobalScope('members', function(Builder $builder){
+            $builder->whereRelation('members','user_id', Auth::id());
         });
     }
 
